@@ -22,6 +22,7 @@
       apps.${system}.default = {
         type = "app";
         program = "${self.packages.${system}.default}/bin/soloist";
+        meta.description = "Run Spotify Soloist";
       };
     };
 }
