@@ -1,0 +1,37 @@
+name: update
+
+on:
+  schedule:
+    - cron: "23 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Bump hash and version
+        id: bump
+        run: ./update.sh
+
+      - name: Open pull request
+        if: steps.bump.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update-soloist
+          commit-message: "soloist: update to ${{ steps.bump.outputs.version }}"
+          title: "soloist: update to ${{ steps.bump.outputs.version }}"
+          body: |
+            Spotify published a new Soloist build. `update.sh` bumped the hash and
+            version in `package.nix`, and the package built and reported this version.
+          delete-branch: true
