@@ -9,11 +9,11 @@
 
 stdenv.mkDerivation {
   pname = "soloist";
-  version = "1.3.9.27";
+  version = "1.3.9.30";
 
   src = fetchurl {
     url = "https://soloist-builds.spotifycdn.com/soloist_release_x86_64.tar.gz";
-    hash = "sha256-/4XIdw5zvoVjQ4pHkpNIAJvfDPxhdFhBJMFGSjljijU=";
+    hash = "sha256-EuVJaa9nxCJ6YEZ2R/NhpRdzBsbhgj/+i+Xv/i0iXuk=";
   };
 
   sourceRoot = ".";
